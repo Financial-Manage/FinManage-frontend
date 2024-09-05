@@ -1,0 +1,27 @@
+.balance-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    max-width: 100%;          /* A largura máxima será a largura do container pai */
+    overflow: hidden;         /* Oculta qualquer conteúdo que ultrapasse a largura */
+    box-sizing: border-box;   /* Inclui padding e borda na largura total */
+}
+
+.content {
+    max-width: 100%;          /* A largura máxima será 100% do container */
+    overflow: hidden;         /* Evita que o conteúdo ultrapasse os limites */
+    box-sizing: border-box;   /* Inclui padding e borda na largura total */
+}
+
+.amount {
+    border: 1px solid green;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    align-items: center;
+    max-width: 100%;          /* Impede que a quantidade de conteúdo faça o container ultrapassar */
+    overflow: hidden;         /* Oculta o conteúdo que ultrapassar o limite */
+    box-sizing: border-box;   /* Inclui padding e borda na largura total */
+}

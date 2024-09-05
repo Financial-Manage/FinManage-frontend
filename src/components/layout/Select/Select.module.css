@@ -1,0 +1,22 @@
+.selectContainer {
+  margin-top: 10px;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.imobBoxTipo {
+  width: 150px;
+  padding: 10px;
+  text-align: center;
+  height: 35px;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+}
+
+.imobBoxTipoValor {
+  width: 110px;
+}
