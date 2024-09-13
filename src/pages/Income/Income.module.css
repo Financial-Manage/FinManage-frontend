@@ -1,0 +1,90 @@
+.container {
+    max-width: 100%;
+
+  }
+
+  .incomeContainer {
+    padding: 15px;
+  }
+
+
+  .divTable {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  table, th, td {
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  th, td {
+    padding: 8px;
+   
+  }
+  
+  button {
+    margin-right: 10px;
+    padding: 5px 10px;
+  }
+  
+  .main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+  }
+
+
+  .formContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  input {
+    margin-bottom: 10px;
+    padding: 8px;
+    border-radius: 10px;
+    width: 100%;
+  }
+  
+ .btnIncome {
+    padding: 15px;
+    border-radius: 15px;
+    background-color: #11161c;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
+  .divBtnAdd {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .btnAdd {
+    padding: 10px;
+    height: 40px;
+    border-radius: 15px;
+    background-color: #11161c;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  button:hover {
+    background-color: #3f7ed8;
+  }

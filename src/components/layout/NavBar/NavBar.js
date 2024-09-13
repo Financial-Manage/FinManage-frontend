@@ -13,10 +13,13 @@ function NavBar() {
       <div className={styles.divLinks}>
         <ul>
           <li>
-            <Link to="/">Receitas</Link>
+            <Link to="/">Dashboard</Link>
           </li>
           <li>
-            <Link to="/novanota">Despesas</Link>
+            <Link to="/receitas">Receitas</Link>
+          </li>
+          <li>
+            <Link to="/despesas">Despesas</Link>
           </li>
           <li>
             <Link to="/notas">Orçamentos</Link>

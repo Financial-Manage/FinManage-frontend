@@ -24,10 +24,7 @@ function Dashboard() {
 
   return (
     <div className="dashboard-container">
-      <NavBar>
-      
-      </NavBar>
-
+      <NavBar />
       <Select
         options={options}
         value={selectedOption}

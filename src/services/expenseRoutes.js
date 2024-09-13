@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost/fin_manage/api_finmanage/routes/incomeRoutes.php";
+const API_URL = "http://localhost/fin_manage/api_finmanage/routes/expenseRoutes.php";
 
 const api = axios.create({
   baseURL: API_URL,
@@ -9,21 +9,21 @@ const api = axios.create({
   },
 });
 
-// ------------------ Rotas de Receitas ------------------
+// ------------------ Rotas de despesas ------------------
 
-// Obter todas as receitas
-export const getAllIncomes = async () => {
+// Obter todas as despesas
+export const getAllExpenses = async () => {
   try {
-    const response = await api.get("/"); // Supondo que a rota `/` retorna todas as receitas
+    const response = await api.get("/"); 
     return response.data;
   } catch (error) {
-    console.error("Erro ao obter todas as receitas:", error);
+    console.error("Erro ao obter todas as despesas:", error);
     throw error;
   }
 };
 
 //pegar todos usuarios
-export const getIncomeById = async (id) => {
+export const getExpenseById = async (id) => {
   try {
     const response = await api.get(`/?id=${id}`);
     return response.data;
@@ -33,56 +33,56 @@ export const getIncomeById = async (id) => {
   }
 };
 
-// Obter receitas por ID de usuário
-export const getIncomesByUser = async (userId) => {
+// Obter despesas por ID de usuário
+export const getExpensesByUser = async (userId) => {
   try {
     const response = await api.get(`/?users_id=${userId}`);
     return response.data;
   } catch (error) {
-    console.error("Erro ao obter receitas por usuário:", error);
+    console.error("Erro ao obter despesas por usuário:", error);
     throw error;
   }
 };
 
 // Criar receita
-export const createIncome = async (incomeData) => {
+export const createExpense = async (ExpenseData) => {
   try {
     const response = await api.post("/", {
-      action: "createIncome",
-      ...incomeData,
+      action: "createExpense",
+      ...ExpenseData,
     });
     return response.data;
   } catch (error) {
-    console.error("Erro ao criar receita:", error);
+    console.error("Erro ao criar despesa:", error);
     throw error;
   }
 };
 
 // Atualizar receita
-export const updateIncome = async (id, incomeData) => {
+export const updateExpense = async (id, ExpenseData) => {
   try {
     const response = await api.post("/", {
-      action: "updateIncome",
+      action: "updateExpense",
       id,
-      ...incomeData,
+      ...ExpenseData,
     });
     return response.data;
   } catch (error) {
-    console.error("Erro ao atualizar receita:", error);
+    console.error("Erro ao atualizar despesa:", error);
     throw error;
   }
 };
 
 // Excluir receita
-export const deleteIncome = async (id) => {
+export const deleteExpense = async (id) => {
   try {
     const response = await api.post("/", {
-      action: "deleteIncome",
+      action: "deleteExpense",
       id,
     });
     return response.data;
   } catch (error) {
-    console.error("Erro ao excluir receita:", error);
+    console.error("Erro ao excluir despesa:", error);
     throw error;
   }
 };
