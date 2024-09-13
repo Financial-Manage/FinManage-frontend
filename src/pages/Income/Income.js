@@ -85,6 +85,7 @@ function Income() {
     setEditId(null);
   }
 
+  console.log(income);
   return (
     <div className={styles.container}>
       <NavBar />

@@ -1,7 +1,7 @@
 .balance-container {
   border: none;
   background-color: #dad7d7f5;
-  width: 250px;
+  width: 260px;
   height: 100px;
   display: flex;
   justify-content: center;
@@ -29,7 +29,7 @@ h4 {
 .amount {
   display: flex;
   flex-direction: row;
-  gap: 80px;
+  gap: 50px;
   align-items: center;         /* Alinha verticalmente o ícone com o texto */
   width: 100%;                 /* Garante que o conteúdo ocupe toda a largura */
   overflow: hidden;            /* Evita que o conteúdo ultrapasse os limites */
