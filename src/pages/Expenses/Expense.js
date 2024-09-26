@@ -3,6 +3,8 @@ import NavBar from "../../components/layout/NavBar/NavBar";
 import styles from "./Expense.module.css";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Select from "../../components/layout/Select/Select";
+import { getCategoryByType } from "../../services/categoriesRoutes";
 import {
   createExpense,
   updateExpense,
@@ -22,20 +24,53 @@ function Expense() {
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
   const [formVisible, setFormVisible] = useState(false);
+  const [selectedCategory, setSelectCategory] = useState("");
+
+  // estado para armazenar categorias dinâmicas
+  const [categories, setCategories] = useState([
+    { value: "", label: "Selecione a categoria" }, // Categoria default
+  ]);
+
+  async function getCategories() {
+    try {
+      const response = await getCategoryByType("expense");
+      const formattedCategories = response.map((cat) => ({
+        value: cat.id,
+        label: cat.name,
+      }));
+
+      setCategories([
+        { value: "", label: "Selecione a categoria" },
+        ...formattedCategories,
+      ]);
+    } catch (error) {
+      console.log("Erro ao buscar receitas:", error);
+    }
+  }
 
   useEffect(() => {
     async function fetchExpenses() {
       try {
         const response = await getAllExpenses();
-        setExpense(response);
+        setExpense(Array.isArray(response)? response : []);
       } catch (error) {
         console.log("Erro ao obter despesas", error);
       }
     }
     fetchExpenses();
+    getCategories();
   }, []);
 
   async function addExpense() {
+    if (
+      !newExpense.description ||
+      !newExpense.amount ||
+      !newExpense.date ||
+      !selectedCategory
+    ) {
+      alert("Por favor, preencha todos os campos obrigatórios.");
+      return;
+    }
     try {
       await createExpense(newExpense);
       const response = await getAllExpenses(); // atualiza a lista de despesas
@@ -77,6 +112,10 @@ function Expense() {
     }
   }
 
+  function handleSelectChange(event) {
+    setSelectCategory(event.target.value);
+  }
+
   function toggleFormVisibiity() {
     setFormVisible(!formVisible); //altera a visibilidade atual para o inverso
     setNewExpense({ description: "", amount: "", date: "" });
@@ -87,6 +126,55 @@ function Expense() {
   return (
     <div className={styles.container}>
       <NavBar />
+      {/*form para add/editar receitas*/}
+      {formVisible && (
+        <div className={styles.main}>
+          <div className={styles.formContainer}>
+            <h3>{isEditing ? "Editar Despesa" : "Adicionar Despesa"}</h3>
+            <label htmlFor="description">Descrição:</label>
+            <input
+              type="text"
+              placeholder="Descrição"
+              value={newExpense.description}
+              onChange={(e) =>
+                setNewExpense({ ...newExpense, description: e.target.value })
+              }
+            />
+            <label htmlFor="amount">Valor:</label>
+            <input
+              type="number"
+              placeholder="Valor"
+              value={newExpense.amount}
+              onChange={(e) =>
+                setNewExpense({ ...newExpense, amount: e.target.value })
+              }
+            />
+            <div className={styles.categoryDate}>
+              <label htmlFor="date">Data de vencimento:</label>
+              <input
+                type="date"
+                value={newExpense.date}
+                onChange={(e) =>
+                  setNewExpense({ ...newExpense, date: e.target.value })
+                }
+              />
+              <label htmlFor="category">Categoria:</label>
+              <Select
+                options={categories}
+                value={selectedCategory}
+                onChange={handleSelectChange}
+                name="dynamicSelect"
+              />
+            </div>
+            <button
+              className={styles.btnExpense}
+              onClick={isEditing ? saveEditExpense : addExpense}
+            >
+              {isEditing ? "Salvar alterações" : "Adicionar Despesa"}
+            </button>
+          </div>
+        </div>
+      )}
       <div className={styles.expenseContainer}>
         <div className={styles.divBtnAdd}>
           <h2>Minhas Despesas</h2>
@@ -129,44 +217,6 @@ function Expense() {
             </tbody>
           </table>
         </div>
-
-        {/*form para add/editar receitas*/}
-        {formVisible && (
-          <div className={styles.main}>
-            <div className={styles.formContainer}>
-              <h3>{isEditing ? "Editar Despesa" : "Adicionar Despesa"}</h3>
-              <input
-                type="text"
-                placeholder="Descrição"
-                value={newExpense.description}
-                onChange={(e) =>
-                  setNewExpense({ ...newExpense, description: e.target.value })
-                }
-              />
-              <input
-                type="number"
-                placeholder="Valor"
-                value={newExpense.amount}
-                onChange={(e) =>
-                  setNewExpense({ ...newExpense, amount: e.target.value })
-                }
-              />
-              <input
-                type="date"
-                value={newExpense.date}
-                onChange={(e) =>
-                  setNewExpense({ ...newExpense, date: e.target.value })
-                }
-              />
-              <button
-                className={styles.btnExpense}
-                onClick={isEditing ? saveEditExpense : addExpense}
-              >
-                {isEditing ? "Salvar alterações" : "Adicionar Despesa"}
-              </button>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );

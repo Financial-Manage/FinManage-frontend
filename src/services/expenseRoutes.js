@@ -87,6 +87,4 @@ export const deleteExpense = async (id) => {
   }
 };
 
-
-
 export default api;

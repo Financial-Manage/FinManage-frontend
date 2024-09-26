@@ -9,6 +9,8 @@ import {
   deleteIncome,
   getAllIncomes,
 } from "../../services/api";
+import Select from "../../components/layout/Select/Select";
+import { getCategoryByType } from "../../services/categoriesRoutes";
 
 function Income() {
   // estado para armazenar receitas
@@ -19,26 +21,63 @@ function Income() {
     description: "",
     amount: "",
     date: "",
+    category_id: ""  // Adicionando o campo category_id
   });
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
   const [formVisible, setFormVisible] = useState(false);
 
+  //estado para armazenar categoria selecionada
+  const [selectedCategory, setSelectCategory] = useState("");
+
+  // estado para armazenar categorias dinâmicas
+  const [categories, setCategories] = useState([
+    { value: "", label: "Selecione a categoria" }, // Categoria default
+  ]);
+
+  async function getCategories() {
+    try {
+      const response = await getCategoryByType("income");
+      const formattedCategories = response.map((cat) => ({
+        value: cat.id,
+        label: cat.name,
+      }));
+
+      setCategories([
+        { value: "", label: "Selecione a categoria" },
+        ...formattedCategories,
+      ]);
+    } catch (error) {
+      console.log("Erro ao buscar receitas:", error);
+    }
+  }
+
   useEffect(() => {
     async function fetchIncomes() {
       try {
         const response = await getAllIncomes();
-        setIncome(response);
+        setIncome(Array.isArray(response)? response : []);
       } catch (error) {
         console.log("Erro ao buscar receitas:", error);
       }
     }
     fetchIncomes();
+    getCategories();
   }, []);
 
   async function addIncome() {
+    if (
+      !newIncome.description ||
+      !newIncome.amount ||
+      !newIncome.date ||
+      !selectedCategory
+    ) {
+      alert("Por favor, preencha todos os campos obrigatórios.");
+      return;
+    }
+    const incomeToAdd = { ...newIncome, category_id: selectedCategory };
     try {
-      await createIncome(newIncome);
+      await createIncome(incomeToAdd);
       const response = await getAllIncomes(); // atualiza a lista de receitas
       setIncome(response);
       setNewIncome({ description: "", amount: "", date: "" });
@@ -85,10 +124,66 @@ function Income() {
     setEditId(null);
   }
 
-  console.log(income);
+  //captura a opção selecionada e armazena no estado de cagtegory
+  function handleSelectChange(event) {
+    const selectedValue = event.target.value; 
+    setSelectCategory(selectedValue);          // Atualiza o estado com o valor selecionado
+  }
+
+
   return (
     <div className={styles.container}>
       <NavBar />
+      {/*form para add/editar receitas*/}
+
+      {formVisible && (
+        <div className={styles.main}>
+          <div className={styles.formContainer}>
+            <h3>{isEditing ? "Editar Receita" : "Adicionar Receita"}</h3>
+            <label htmlFor="description">Descrição:</label>
+            <input
+              type="text"
+              placeholder="Descrição"
+              value={newIncome.description}
+              onChange={(e) =>
+                setNewIncome({ ...newIncome, description: e.target.value })
+              }
+            />
+            <label htmlFor="amount">Valor:</label>
+            <input
+              type="number"
+              placeholder="Valor"
+              value={newIncome.amount}
+              onChange={(e) =>
+                setNewIncome({ ...newIncome, amount: e.target.value })
+              }
+            />
+            <div className={styles.categoryDate}>
+              <label htmlFor="date">Data de entrada:</label>
+              <input
+                type="date"
+                value={newIncome.date}
+                onChange={(e) =>
+                  setNewIncome({ ...newIncome, date: e.target.value })
+                }
+              />
+              <label htmlFor="categorye">Categoria:</label>
+              <Select
+                options={categories}
+                value={selectedCategory}
+                onChange={handleSelectChange}
+                name="dynamicSelect"
+              />
+            </div>
+            <button
+              className={styles.btnIncome}
+              onClick={isEditing ? saveEditIncome : addIncome}
+            >
+              {isEditing ? "Salvar alterações" : "Adicionar receita"}
+            </button>
+          </div>
+        </div>
+      )}
       <div className={styles.incomeContainer}>
         <div className={styles.divBtnAdd}>
           <h2>Minhas Receitas</h2>
@@ -131,45 +226,6 @@ function Income() {
             </tbody>
           </table>
         </div>
-
-        {/*form para add/editar receitas*/}
-
-        {formVisible && (
-          <div className={styles.main}>
-            <div className={styles.formContainer}>
-              <h3>{isEditing ? "Editar Receita" : "Adicionar Receita"}</h3>
-              <input
-                type="text"
-                placeholder="Descrição"
-                value={newIncome.description}
-                onChange={(e) =>
-                  setNewIncome({ ...newIncome, description: e.target.value })
-                }
-              />
-              <input
-                type="number"
-                placeholder="Valor"
-                value={newIncome.amount}
-                onChange={(e) =>
-                  setNewIncome({ ...newIncome, amount: e.target.value })
-                }
-              />
-              <input
-                type="date"
-                value={newIncome.date}
-                onChange={(e) =>
-                  setNewIncome({ ...newIncome, date: e.target.value })
-                }
-              />
-              <button
-                className={styles.btnIncome}
-                onClick={isEditing ? saveEditIncome : addIncome}
-              >
-                {isEditing ? "Salvar alterações" : "Adicionar receita"}
-              </button>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );

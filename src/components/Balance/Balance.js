@@ -1,7 +1,8 @@
 import React from "react";
 import styles from "../styles/Balance.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
+
 
 function Balance({ balance, title, icon }) {
   return (

@@ -2,5 +2,37 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    max-width: 100%;
     
 }
+
+.divNavBar {
+  max-width: 97.9%;
+}
+
+.divBtnAdd {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 15px;
+    gap: 310px;
+  }
+
+  .divDashBtnAdd {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+ 
+
+.btnAdd {
+    padding: 12px;
+    height: 40px;
+    border-radius: 30px;
+    background-color: #11161c;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-right: 50px;
+    
+  }

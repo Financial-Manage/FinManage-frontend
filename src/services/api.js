@@ -66,6 +66,7 @@ export const updateIncome = async (id, incomeData) => {
       id,
       ...incomeData,
     });
+    console.log(incomeData)
     return response.data;
   } catch (error) {
     console.error("Erro ao atualizar receita:", error);

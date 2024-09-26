@@ -1,0 +1,121 @@
+.container {
+  max-width: 100%;
+}
+
+.categoryContainer {
+  padding: 15px;
+}
+
+.divBtnAdd {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding: 10px;
+}
+
+.divSelect {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.divButton {
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.divBtnList {
+  display: flex;
+}
+
+.divTable {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.myCategories {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+table,
+th,
+td {
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+th,
+td {
+  padding: 8px;
+}
+
+button {
+  padding: 5px 10px;
+}
+
+label {
+margin: 0 auto;
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.formContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  flex-direction: column;
+}
+
+input {
+  margin-bottom: 10px;
+  padding: 8px;
+  border-radius: 10px;
+  width: 100%;
+}
+
+form {
+  width: 100%;
+}
+select {
+  margin-bottom: 1px;
+  padding: 8px;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.btnCategories {
+  margin: 0 auto;
+  padding: 15px;
+  border-radius: 15px;
+  background-color: #11161c;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.btnAdd {
+  padding: 10px;
+  height: 40px;
+  border-radius: 15px;
+  background-color: #11161c;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}

@@ -68,6 +68,12 @@
     border-radius: 5px;
   }
 
+  .categoryDate {
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+  }
+
   .divBtnAdd {
     display: flex;
     justify-content: space-between;

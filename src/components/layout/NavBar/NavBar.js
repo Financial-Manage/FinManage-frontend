@@ -16,11 +16,15 @@ function NavBar() {
             <Link to="/">Dashboard</Link>
           </li>
           <li>
+            <Link to="/categorias">Categorias</Link>
+          </li>
+          <li>
             <Link to="/receitas">Receitas</Link>
           </li>
           <li>
             <Link to="/despesas">Despesas</Link>
           </li>
+          
           <li>
             <Link to="/notas">Orçamentos</Link>
           </li>
