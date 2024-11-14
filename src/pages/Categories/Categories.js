@@ -23,8 +23,7 @@ function Categories() {
   });
   const [editId, setEditId] = useState(null);
   const [formVisible, setFormVisible] = useState(false);
-  const type = [
-    { value: "", label: "Selecione" },
+  const typeOptions = [
     { value: "income", label: "Receita" },
     { value: "expense", label: "Despesa" },
   ];
@@ -56,7 +55,7 @@ function Categories() {
     try {
       await createCategory(newCategory);
       const response = await getAllCategories(); // atualiza a lista de receitas
-      setCategories(response);
+      setCategories(Array.isArray(response) ? response : []);
       console.log(response);
       setNewCategory({
         name: "",
@@ -99,7 +98,7 @@ function Categories() {
     try {
       await deleteCategory(id);
       const response = await getAllCategories(); // atualiza a lista de receitas
-      setCategories(response);
+      setCategories(Array.isArray(response) ? response : []);
     } catch (error) {
       console.error("Erro ao excluir categoria:", error);
     }
@@ -117,10 +116,15 @@ function Categories() {
     setEditId(null);
   }
 
-  //função para lidar com mudanças nos campos input e dropdown
-  function handleChange(e) {
+  // Função para lidar com inputs de texto
+  function handleInputChange(e) {
     const { name, value } = e.target;
     setNewCategory({ ...newCategory, [name]: value });
+  }
+
+  // Função para lidar com o `Select`
+  function handleSelectChange(value) {
+    setNewCategory({ ...newCategory, type: value });
   }
 
   //alterna o valor de isRecurring quando o checkbox é marcado ou desmarcado
@@ -173,7 +177,7 @@ function Categories() {
                   id="name"
                   name="name"
                   value={newCategory.name}
-                  onChange={handleChange}
+                  onChange={handleInputChange}
                   required
                 />
               </div>
@@ -184,7 +188,7 @@ function Categories() {
                   id="description"
                   name="description"
                   value={newCategory.description}
-                  onChange={handleChange}
+                  onChange={handleInputChange}
                   required
                 />
               </div>
@@ -195,17 +199,17 @@ function Categories() {
                   name="users_id"
                   value={newCategory.users_id}
                   hidden
-                  onChange={handleChange}
+                  onChange={handleInputChange}
                   required
                 />
               </div>
               <label>Tipo:</label>
               <div className={styles.divSelect}>
                 <Select
-                  options={type}
+                  options={typeOptions}
                   name="type"
-                  value={newCategory.type} // Aqui agora é diretamente o valor do estado
-                  onChange={handleChange} // Usamos a função handleChange para capturar o evento
+                  value={newCategory.type}
+                  onChange={handleSelectChange} // Lida diretamente com o valor selecionado
                 />
               </div>
               <div className={styles.divButton}>
@@ -238,18 +242,20 @@ function Categories() {
                   <td>{category.description}</td>
                   <td>{category.type === "income" ? "Receita" : "Despesa"}</td>
                   <td>
-                    <button
-                      className={styles.btnCategories}
-                      onClick={() => handleEditClick(category)}
-                    >
-                      Editar
-                    </button>
-                    <button
-                      className={styles.btnCategories}
-                      onClick={() => delCategory(category.id)}
-                    >
-                      Excluir
-                    </button>
+                    <div className={styles.btnActions}>
+                      <button
+                        className={styles.btnCategories}
+                        onClick={() => handleEditClick(category)}
+                      >
+                        Editar
+                      </button>
+                      <button
+                        className={styles.btnCategories}
+                        onClick={() => delCategory(category.id)}
+                      >
+                        Excluir
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}

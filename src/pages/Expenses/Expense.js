@@ -18,18 +18,16 @@ function Expense() {
     description: "",
     amount: "",
     date: "",
+    category_id: ""
   });
 
-  //tirar dps
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
   const [formVisible, setFormVisible] = useState(false);
-  const [selectedCategory, setSelectCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
 
-  // estado para armazenar categorias dinâmicas
-  const [categories, setCategories] = useState([
-    { value: "", label: "Selecione a categoria" }, // Categoria default
-  ]);
+  // Estado para armazenar categorias dinâmicas
+  const [categories, setCategories] = useState([]);
 
   async function getCategories() {
     try {
@@ -44,7 +42,7 @@ function Expense() {
         ...formattedCategories,
       ]);
     } catch (error) {
-      console.log("Erro ao buscar receitas:", error);
+      console.log("Erro ao buscar categorias:", error);
     }
   }
 
@@ -52,7 +50,7 @@ function Expense() {
     async function fetchExpenses() {
       try {
         const response = await getAllExpenses();
-        setExpense(Array.isArray(response)? response : []);
+        setExpense(Array.isArray(response) ? response : []);
       } catch (error) {
         console.log("Erro ao obter despesas", error);
       }
@@ -61,21 +59,34 @@ function Expense() {
     getCategories();
   }, []);
 
+  // Função para lidar com inputs de texto
+  function handleInputChange(e) {
+    const { name, value } = e.target;
+    setNewExpense({ ...newExpense, [name]: value });
+  }
+
+  // Função para lidar com a seleção de categoria
+  function handleSelectChange(value) {
+    setSelectedCategory(value); // Atualiza `selectedCategory`
+    setNewExpense({ ...newExpense, category_id: value }); // Atualiza `category_id` em `newExpense`
+  }
+
   async function addExpense() {
     if (
       !newExpense.description ||
       !newExpense.amount ||
       !newExpense.date ||
-      !selectedCategory
+      !newExpense.category_id
     ) {
       alert("Por favor, preencha todos os campos obrigatórios.");
       return;
     }
     try {
       await createExpense(newExpense);
-      const response = await getAllExpenses(); // atualiza a lista de despesas
-      setExpense(response);
-      setNewExpense({ description: "", amount: "", date: "" });
+      const response = await getAllExpenses(); // Atualiza a lista de despesas
+      setExpense(Array.isArray(response) ? response : []);
+      setNewExpense({ description: "", amount: "", date: "", category_id: "" });
+      setSelectedCategory("");
     } catch (error) {
       console.error("Erro ao adicionar despesa:", error);
     }
@@ -84,8 +95,8 @@ function Expense() {
   async function delExpense(id) {
     try {
       await deleteExpense(id);
-      const response = await getAllExpenses(); //atualiza a lista
-      setExpense(response);
+      const response = await getAllExpenses(); // Atualiza a lista de despesas
+      setExpense(Array.isArray(response) ? response : []);
     } catch (error) {
       console.error("Erro ao excluir despesa:", error);
     }
@@ -93,32 +104,31 @@ function Expense() {
 
   function editExpense(id) {
     const expenseToEdit = expense.find((expense) => expense.id === id);
-    setNewExpense(expenseToEdit); //passa para newExpense a despesa a ser editada
+    setNewExpense(expenseToEdit);
+    setSelectedCategory(expenseToEdit.category_id); // Define a categoria selecionada
     setIsEditing(true);
-    setEditId(id); //passa para editId o id da despesa
+    setEditId(id);
     setFormVisible(true);
   }
 
   async function saveEditExpense() {
     try {
       await updateExpense(editId, newExpense);
-      const response = await getAllExpenses();
+      const response = await getAllExpenses(); // Atualiza a lista de despesas
       setExpense(response);
-      setNewExpense({ description: "", amount: "", date: "" });
+      setNewExpense({ description: "", amount: "", date: "", category_id: "" });
       setIsEditing(false);
       setEditId(null);
+      console.log(newExpense);
+      setSelectedCategory("");
     } catch (error) {
       console.error("Erro ao salvar alterações:", error);
     }
   }
 
-  function handleSelectChange(event) {
-    setSelectCategory(event.target.value);
-  }
-
-  function toggleFormVisibiity() {
-    setFormVisible(!formVisible); //altera a visibilidade atual para o inverso
-    setNewExpense({ description: "", amount: "", date: "" });
+  function toggleFormVisibility() {
+    setFormVisible(!formVisible);
+    setNewExpense({ description: "", amount: "", date: "", category_id: "" });
     setIsEditing(false);
     setEditId(null);
   }
@@ -126,7 +136,6 @@ function Expense() {
   return (
     <div className={styles.container}>
       <NavBar />
-      {/*form para add/editar receitas*/}
       {formVisible && (
         <div className={styles.main}>
           <div className={styles.formContainer}>
@@ -135,35 +144,32 @@ function Expense() {
             <input
               type="text"
               placeholder="Descrição"
+              name="description"
               value={newExpense.description}
-              onChange={(e) =>
-                setNewExpense({ ...newExpense, description: e.target.value })
-              }
+              onChange={handleInputChange}
             />
             <label htmlFor="amount">Valor:</label>
             <input
               type="number"
               placeholder="Valor"
+              name="amount"
               value={newExpense.amount}
-              onChange={(e) =>
-                setNewExpense({ ...newExpense, amount: e.target.value })
-              }
+              onChange={handleInputChange}
             />
             <div className={styles.categoryDate}>
               <label htmlFor="date">Data de vencimento:</label>
               <input
                 type="date"
+                name="date"
                 value={newExpense.date}
-                onChange={(e) =>
-                  setNewExpense({ ...newExpense, date: e.target.value })
-                }
+                onChange={handleInputChange}
               />
               <label htmlFor="category">Categoria:</label>
               <Select
                 options={categories}
                 value={selectedCategory}
-                onChange={handleSelectChange}
-                name="dynamicSelect"
+                onChange={handleSelectChange} // Passa `handleSelectChange` para o `Select`
+                name="category_id"
               />
             </div>
             <button
@@ -178,7 +184,7 @@ function Expense() {
       <div className={styles.expenseContainer}>
         <div className={styles.divBtnAdd}>
           <h2>Minhas Despesas</h2>
-          <button className={styles.btnAdd} onClick={toggleFormVisibiity}>
+          <button className={styles.btnAdd} onClick={toggleFormVisibility}>
             Adicionar Despesa <FontAwesomeIcon icon={faPlus} />
           </button>
         </div>

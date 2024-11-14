@@ -1,0 +1,104 @@
+/* Container principal */
+.container {
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Cabeçalho */
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  /* Filtro de Notificações */
+  .filters {
+    margin: 15px 0;
+    display: flex;
+    gap: 10px;
+  }
+  
+  .filterButton {
+    padding: 8px 12px;
+    border: none;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .filterButton:hover {
+    background-color: #d0d0d0;
+  }
+  
+  /* Lista de Notificações */
+  .notificationsList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  /* Cartão de Notificação */
+  .notificationCard {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    transition: transform 0.2s;
+  }
+  
+  .notificationCard:hover {
+    transform: translateY(-3px);
+  }
+  
+  /* Ícones de Notificação */
+  .notificationCard i {
+    font-size: 24px;
+  }
+  
+  /* Tipos de Notificação */
+  .alert {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+  
+  .warning {
+    background-color: #fff3cd;
+    color: #856404;
+  }
+  
+  .info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+  }
+  
+  /* Botão "Marcar como Lida" */
+  .markReadButton {
+    position: absolute;
+    right: 10px;
+    padding: 5px 10px;
+    font-size: 12px;
+    color: #007bff;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .markReadButton:hover {
+    text-decoration: underline;
+  }
+  
+  /* Estilo de Notificação Lida */
+  .read {
+    opacity: 0.6;
+  }
+  

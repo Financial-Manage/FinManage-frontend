@@ -59,7 +59,6 @@ export const createCategory = async (categoryData) => {
       action: "createCategory",
       ...categoryData,
     });
-    console.log(categoryData);
     return response.data;
   } catch (error) {
     console.error("Erro ao criar categoria:", error);

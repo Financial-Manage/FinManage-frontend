@@ -1,27 +1,61 @@
-.balance-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 15px;
-    max-width: 100%;          /* A largura máxima será a largura do container pai */
-    overflow: hidden;         /* Oculta qualquer conteúdo que ultrapasse a largura */
-    box-sizing: border-box;   /* Inclui padding e borda na largura total */
+.saldoContainer,
+.receitasContainer,
+.despesasContainer {
+  border: none;
+  width: 350px;
+  height: 110px;
+  display: flex;
+  padding: 10px;
+  border: solid 1px #666;
+  border-radius: 30px;
+  margin: 5px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.receitasContainer {
+  background-color: #b2f1ada4;
+}
+
+.saldoContainer {
+  background-color: #b2cee7a1;
+}
+
+.despesasContainer {
+  background-color: #f89b9b9c;
 }
 
 .content {
-    max-width: 100%;          /* A largura máxima será 100% do container */
-    overflow: hidden;         /* Evita que o conteúdo ultrapasse os limites */
-    box-sizing: border-box;   /* Inclui padding e borda na largura total */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+h4 {
+  margin-top: 5px;
+  margin-bottom: 0;
 }
 
 .amount {
-    border: 1px solid green;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    gap: 30px;
-    align-items: center;
-    max-width: 100%;          /* Impede que a quantidade de conteúdo faça o container ultrapassar */
-    overflow: hidden;         /* Oculta o conteúdo que ultrapassar o limite */
-    box-sizing: border-box;   /* Inclui padding e borda na largura total */
+  display: flex;
+  align-items: center; /* Alinha verticalmente o h2 e o botão */
+  justify-content: space-between; /* Espaça o h2 e o botão ao longo da largura */
+  width: 100%;
+}
+
+.amount h2 {
+  margin: 0;
+  flex-grow: 1; /* Permite que o h2 ocupe espaço restante */
+}
+
+.iconButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5em;
+  padding: 0;
+  margin-left: auto; /* Garante que o ícone fique alinhado à direita */
 }

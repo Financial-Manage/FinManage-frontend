@@ -1,10 +1,25 @@
 .navBar {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 1em;
     width: 100%;
-    background-color: #11161c;
+    background-color: #000000;
     opacity: 0.87;
+}
+
+.logoContainer {
+    position: relative; /* Define como contêiner de referência para o logo */
+    height: 90px; /* Altura fixa do NavBar */
+}
+
+.logo {
+    position: absolute;
+    top: 50%; /* Centraliza verticalmente */
+    left: 0;
+    transform: translateY(-50%); /* Ajusta o logo para o centro vertical */
+    height: 200px; /* Aumente o valor para ajustar o tamanho do logo */
+    width: auto;
 }
 
 .divLinks {
@@ -13,16 +28,11 @@
 
 .navBar ul {
     display: flex;
-    text-decoration: none;
     list-style: none;
     align-items: center;
     margin-left: 0;
     gap: 40px;
 }
-
-/* .navBar li {
-    margin-right: 1em;
-} */
 
 .navBar li a {
     color: #fff;
@@ -33,6 +43,6 @@
 }
 
 .navBar li a:hover {
-    background-color: #5390D9;
+    background-color: #3c81bd;
     color: #000;
 }

@@ -67,6 +67,9 @@ label {
 margin: 0 auto;
 }
 
+.btnActions {
+  display: flex;
+}
 .main {
   display: flex;
   justify-content: center;

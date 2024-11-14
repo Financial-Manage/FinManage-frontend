@@ -66,6 +66,7 @@ export const updateExpense = async (id, ExpenseData) => {
       id,
       ...ExpenseData,
     });
+    console.log(ExpenseData);
     return response.data;
   } catch (error) {
     console.error("Erro ao atualizar despesa:", error);

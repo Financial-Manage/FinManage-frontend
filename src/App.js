@@ -5,6 +5,8 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import Income from "./pages/Income/Income";
 import Expense from "./pages/Expenses/Expense";
 import Categories from "./pages/Categories/Categories";
+import Budgets from "./pages/Budgets/Budgets";
+import Notifications from "./pages/Notifications/Notifications";
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
         <Route path="/receitas" element={<Income/>} />
         <Route path="/despesas" element={<Expense/>} />
         <Route path="/categorias" element={<Categories/>} />
+        <Route path="/orcamento" element={<Budgets/>} />
+        <Route path="/notificacoes" element={<Notifications/>} />
       </Routes>
   );
 }

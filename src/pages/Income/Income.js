@@ -13,27 +13,22 @@ import Select from "../../components/layout/Select/Select";
 import { getCategoryByType } from "../../services/categoriesRoutes";
 
 function Income() {
-  // estado para armazenar receitas
   const [income, setIncome] = useState([]);
-
-  // estado para armazenar nova receita
   const [newIncome, setNewIncome] = useState({
     description: "",
     amount: "",
     date: "",
-    category_id: ""  // Adicionando o campo category_id
+    category_id: "",
   });
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
   const [formVisible, setFormVisible] = useState(false);
 
-  //estado para armazenar categoria selecionada
-  const [selectedCategory, setSelectCategory] = useState("");
+  // Estado para armazenar categoria selecionada
+  const [selectedCategory, setSelectedCategory] = useState("");
 
-  // estado para armazenar categorias dinâmicas
-  const [categories, setCategories] = useState([
-    { value: "", label: "Selecione a categoria" }, // Categoria default
-  ]);
+  // Estado para armazenar categorias dinâmicas
+  const [categories, setCategories] = useState([]);
 
   async function getCategories() {
     try {
@@ -48,7 +43,7 @@ function Income() {
         ...formattedCategories,
       ]);
     } catch (error) {
-      console.log("Erro ao buscar receitas:", error);
+      console.log("Erro ao buscar categorias:", error);
     }
   }
 
@@ -56,7 +51,7 @@ function Income() {
     async function fetchIncomes() {
       try {
         const response = await getAllIncomes();
-        setIncome(Array.isArray(response)? response : []);
+        setIncome(Array.isArray(response) ? response : []);
       } catch (error) {
         console.log("Erro ao buscar receitas:", error);
       }
@@ -65,22 +60,33 @@ function Income() {
     getCategories();
   }, []);
 
+  // Função para lidar com inputs de texto
+  function handleInputChange(e) {
+    const { name, value } = e.target;
+    setNewIncome({ ...newIncome, [name]: value });
+  }
+
+  // Função para lidar com a seleção de categoria
+  function handleSelectChange(value) {
+    setSelectedCategory(value); // Atualiza `selectedCategory` com o valor selecionado
+    setNewIncome({ ...newIncome, category_id: value }); // Define `category_id` no `newIncome`
+  }
+
   async function addIncome() {
     if (
       !newIncome.description ||
       !newIncome.amount ||
       !newIncome.date ||
-      !selectedCategory
+      !newIncome.category_id
     ) {
       alert("Por favor, preencha todos os campos obrigatórios.");
       return;
     }
-    const incomeToAdd = { ...newIncome, category_id: selectedCategory };
     try {
-      await createIncome(incomeToAdd);
-      const response = await getAllIncomes(); // atualiza a lista de receitas
-      setIncome(response);
-      setNewIncome({ description: "", amount: "", date: "" });
+      await createIncome(newIncome);
+      const response = await getAllIncomes(); // Atualiza a lista de receitas
+      setIncome(Array.isArray(response) ? response : []);
+      setNewIncome({ description: "", amount: "", date: "", category_id: "" });
     } catch (error) {
       console.error("Erro ao adicionar receita:", error);
     }
@@ -89,8 +95,8 @@ function Income() {
   async function delIncome(id) {
     try {
       await deleteIncome(id);
-      const response = await getAllIncomes(); // atualiza a lista de receitas
-      setIncome(response);
+      const response = await getAllIncomes(); // Atualiza a lista de receitas
+      setIncome(Array.isArray(response) ? response : []);
     } catch (error) {
       console.error("Erro ao excluir receita:", error);
     }
@@ -99,6 +105,7 @@ function Income() {
   function editIncome(id) {
     const incomeToEdit = income.find((income) => income.id === id);
     setNewIncome(incomeToEdit);
+    setSelectedCategory(incomeToEdit.category_id);
     setIsEditing(true);
     setEditId(id);
     setFormVisible(true);
@@ -107,35 +114,27 @@ function Income() {
   async function saveEditIncome() {
     try {
       await updateIncome(editId, newIncome);
-      const response = await getAllIncomes(); // atualiza a lista de receitas
+      const response = await getAllIncomes(); // Atualiza a lista de receitas
       setIncome(response);
-      setNewIncome({ description: "", amount: "", date: "" });
+      setNewIncome({ description: "", amount: "", date: "", category_id: "" });
       setIsEditing(false);
       setEditId(null);
+      setSelectedCategory("");
     } catch (error) {
       console.error("Erro ao salvar alterações:", error);
     }
   }
 
-  function toggleFormVisibiity() {
-    setFormVisible(!formVisible); //altera a visibilidade atual para o inverso
-    setNewIncome({ description: "", amount: "", date: "" });
+  function toggleFormVisibility() {
+    setFormVisible(!formVisible); // Alterna a visibilidade do formulário
+    setNewIncome({ description: "", amount: "", date: "", category_id: "" });
     setIsEditing(false);
     setEditId(null);
   }
 
-  //captura a opção selecionada e armazena no estado de cagtegory
-  function handleSelectChange(event) {
-    const selectedValue = event.target.value; 
-    setSelectCategory(selectedValue);          // Atualiza o estado com o valor selecionado
-  }
-
-
   return (
     <div className={styles.container}>
       <NavBar />
-      {/*form para add/editar receitas*/}
-
       {formVisible && (
         <div className={styles.main}>
           <div className={styles.formContainer}>
@@ -144,35 +143,32 @@ function Income() {
             <input
               type="text"
               placeholder="Descrição"
+              name="description"
               value={newIncome.description}
-              onChange={(e) =>
-                setNewIncome({ ...newIncome, description: e.target.value })
-              }
+              onChange={handleInputChange}
             />
             <label htmlFor="amount">Valor:</label>
             <input
               type="number"
               placeholder="Valor"
+              name="amount"
               value={newIncome.amount}
-              onChange={(e) =>
-                setNewIncome({ ...newIncome, amount: e.target.value })
-              }
+              onChange={handleInputChange}
             />
             <div className={styles.categoryDate}>
               <label htmlFor="date">Data de entrada:</label>
               <input
                 type="date"
+                name="date"
                 value={newIncome.date}
-                onChange={(e) =>
-                  setNewIncome({ ...newIncome, date: e.target.value })
-                }
+                onChange={handleInputChange}
               />
-              <label htmlFor="categorye">Categoria:</label>
+              <label htmlFor="category">Categoria:</label>
               <Select
                 options={categories}
                 value={selectedCategory}
-                onChange={handleSelectChange}
-                name="dynamicSelect"
+                onChange={handleSelectChange} // Passa a função `handleSelectChange`
+                name="category_id"
               />
             </div>
             <button
@@ -187,7 +183,7 @@ function Income() {
       <div className={styles.incomeContainer}>
         <div className={styles.divBtnAdd}>
           <h2>Minhas Receitas</h2>
-          <button className={styles.btnAdd} onClick={toggleFormVisibiity}>
+          <button className={styles.btnAdd} onClick={toggleFormVisibility}>
             Adicionar Receita <FontAwesomeIcon icon={faPlus} />
           </button>
         </div>

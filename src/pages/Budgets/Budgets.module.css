@@ -1,0 +1,140 @@
+.container {
+  max-width: 100%;
+}
+
+.budgetsContainer {
+  padding: 15px;
+}
+
+.warningBudget {
+  background-color: #f0d37cf3; /* Amarelo claro para alerta */
+}
+
+/* Classe para orçamentos que ultrapassaram o limite */
+.overBudget {
+  background-color: #f1948a; /* Vermelho claro para indicar alerta */
+}
+
+/* Classe para orçamentos dentro do limite */
+.normalBudget {
+  background-color: #f5eeda; /* Cor padrão */
+}
+
+/* Centraliza a tabela na página */
+.divTable {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Estilização da tabela */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+/* Bordas e alinhamento */
+table,
+th,
+td {
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+/* Espaçamento interno das células */
+th,
+td {
+  padding: 8px;
+}
+
+/* Estilização dos botões */
+button {
+  margin-right: 10px;
+  padding: 5px 10px;
+}
+
+/* Estilização principal */
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Contêiner do formulário */
+.formContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Estilo dos inputs */
+input {
+  margin-bottom: 10px;
+  padding: 8px;
+  border-radius: 10px;
+  width: 100%;
+}
+
+/* Estilo do select */
+select {
+  margin-bottom: 1px;
+  padding: 8px;
+  border-radius: 10px;
+  width: 100%;
+}
+
+/* Botão principal */
+.btnSave {
+  padding: 15px;
+  border-radius: 15px;
+  background-color: #11161c;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+/* Estilo da seção de categoria e limite */
+.categoryDate {
+  display: flex;
+  justify-content: space-between;
+  gap: 50px;
+}
+
+/* Div do botão de adicionar */
+.divBtnAdd {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btnBudgets {
+  margin: 0 auto;
+  padding: 15px;
+  border-radius: 15px;
+  background-color: #11161c;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+/* Botão de adicionar */
+.btnAdd {
+  padding: 10px;
+  height: 40px;
+  border-radius: 15px;
+  background-color: #11161c;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+/* Efeito hover nos botões */
+button:hover {
+  background-color: #3f7ed8;
+}

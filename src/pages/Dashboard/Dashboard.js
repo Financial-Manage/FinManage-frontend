@@ -88,16 +88,19 @@ function Dashboard() {
         </Link>
       </div>
       <Container>
-        <Balance title={"Saldo:"} balance={formatCurrency(totalBalance)} />
+        <Balance title={"Saldo:"} balance={formatCurrency(totalBalance)} 
+        clss={"saldoContainer"} />
         <Balance
           title={"Receitas Previstas:"}
           balance={formatCurrency(incomesTotal)}
           icon={faPlus}
+          clss={"receitasContainer"}
         />
         <Balance
           title={"Despesas Previstas:"}
           balance={formatCurrency(expensesTotal)}
           icon={faPlus}
+          clss={"despesasContainer"}
         />
       </Container>
       {/* <div className={styles.divBtnAdd}>
