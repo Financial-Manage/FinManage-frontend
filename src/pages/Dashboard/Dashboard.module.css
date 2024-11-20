@@ -1,39 +1,79 @@
-.dashboard-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    max-width: 100%;
-    background-color: #11161c;
-    
+/* Estilos principais */
+.dashboardContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-.divNavBar {
-  max-width: 97.9%;
+/* Conteúdo principal */
+.dashboardContent {
+  margin-top: 60px; /* para compensar a altura da NavBar */
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.divBtnAdd {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    padding: 15px;
-    gap: 310px;
-  }
+/* Cabeçalho do dashboard */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
 
-  .divDashBtnAdd {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
- 
+.header h2 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #11161c;
+}
 
+/* Botão de adição */
 .btnAdd {
-    padding: 12px;
-    height: 40px;
-    border-radius: 30px;
-    background-color: #11161c;
-    color: white;
-    border: none;
-    cursor: pointer;
-    margin-right: 50px;
-    
-  }
+  padding: 10px 15px;
+  background-color: #11161c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btnAdd:hover {
+  background-color: #3f7ed8;
+}
+
+/* Container do seletor de mês */
+.selectContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+/* Container de saldo e cartões */
+.balanceContainer {
+  display: flex;
+  justify-content: space-around;
+  gap: 60px;
+  flex-wrap: wrap;
+}
+
+/* Cartão de saldo e estatísticas */
+.saldoContainer, .receitasContainer, .despesasContainer {
+  flex: 1;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  color: #11161c;
+  min-width: 200px;
+}
+
+.saldoContainer h4, .receitasContainer h4, .despesasContainer h4 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.saldoContainer p, .receitasContainer p, .despesasContainer p {
+  font-size: 24px;
+  font-weight: bold;
+  color: #11161c;
+}

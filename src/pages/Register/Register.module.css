@@ -1,0 +1,125 @@
+/* Estilo do container principal */
+.pageContainer {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  /* Conteúdo centralizado */
+  .contentContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+  
+  /* Formulário com tamanho e proporções ajustados */
+  .formContainer {
+    background-color: #ffffff;
+    padding: 40px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .formContainer h2 {
+    margin-bottom: 25px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #11161c;
+  }
+  
+  /* Estilo para os labels */
+  .formContainer label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: left;
+    font-size: 14px;
+    color: #11161c;
+  }
+  
+  /* Inputs estilizados */
+  .formContainer input {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+  
+  /* Botão principal */
+  .btnPrimary {
+    background-color: #11161c;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btnPrimary:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Link estilizado */
+  .link {
+    color: #0056b3;
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: 14px;
+  }
+  
+  .link:hover {
+    color: #003c7a;
+  }
+  
+  /* Mensagens de erro e sucesso */
+  .error {
+    color: #d9534f;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .success {
+    color: #5cb85c;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  /* Ajuste de espaçamento para proporções uniformes */
+  .formContainer p {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #11161c;
+  }
+  
+  /* Responsividade */
+  @media (max-width: 768px) {
+    .formContainer {
+      max-width: 90%;
+      padding: 30px 20px;
+    }
+  
+    .formContainer h2 {
+      font-size: 20px;
+    }
+  
+    .formContainer input {
+      padding: 10px;
+    }
+  
+    .btnPrimary {
+      padding: 10px;
+    }
+  }
+  

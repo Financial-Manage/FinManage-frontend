@@ -1,103 +1,109 @@
-.container {
-    max-width: 100%;
+/* Container principal ocupando a tela inteira */
+.pageContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 
-  }
+}
 
-  .incomeContainer {
-    padding: 15px;
-  }
+/* Conteúdo abaixo da NavBar */
+.contentContainer {
+  margin-top: 60px;
+  padding: 20px;
+  flex: 1;
+}
 
+/* Cabeçalho */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
 
-  .divTable {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-  }
-  
-  table, th, td {
-    border: 1px solid #ddd;
-    text-align: left;
-  }
-  
-  th, td {
-    padding: 8px;
-   
-  }
-  
-  button {
-    margin-right: 10px;
-    padding: 5px 10px;
-  }
-  
-  .main{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  
-  }
+.header h2 {
+  font-size: 24px;
+  font-weight: bold;
+}
 
+.formContainer {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
-  .formContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 50%;
-    flex-direction: column;
-    gap: 20px;
-  }
-  
+.formContainer label {
+  font-weight: bold;
+}
 
-  input {
-    margin-bottom: 10px;
-    padding: 8px;
-    border-radius: 10px;
-    width: 100%;
-  }
-  
-  select {
-    margin-bottom: 1px;
-    padding: 8px;
-    border-radius: 10px;
-    width: 100%;
-  }
+.formContainer input,
+.formContainer select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
 
- .btnIncome {
-    padding: 15px;
-    border-radius: 15px;
-    background-color: #11161c;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-  }
+.btnSave {
+  padding: 10px 15px;
+  background-color: #11161c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
-  .categoryDate {
-    display: flex;
-    justify-content: space-between;
-    gap: 50px;
-  }
-  .divBtnAdd {
-    display: flex;
-    justify-content: space-between;
-  }
+.btnSave:hover {
+  background-color: #0056b3;
+}
 
-  .btnAdd {
-    padding: 10px;
-    height: 40px;
-    border-radius: 15px;
-    background-color: #11161c;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  
-  button:hover {
-    background-color: #3f7ed8;
-  }
+.btnAdd {
+  padding: 10px 15px;
+  background-color: #11161c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btnAdd:hover {
+  background-color: #3f7ed8;
+}
+
+.incomeList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.incomeCard {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  gap: 10px;
+}
+
+.incomeDetails {
+  flex-grow: 1;
+}
+
+.incomeActions button {
+  margin-right: 5px;
+  background-color: #11161c;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.incomeActions button:hover {
+  background-color: #0056b3;
+}

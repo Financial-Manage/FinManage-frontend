@@ -1,15 +1,14 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation as useReactRouterLocation } from "react-router-dom";
 import styles from "./Categories.module.css";
 import NavBar from "../../components/layout/NavBar/NavBar";
+import Select from "../../components/layout/Select/Select";
 import {
   createCategory,
   updateCategory,
   deleteCategory,
   getAllCategories,
-  getCategoryByType,
 } from "../../services/categoriesRoutes";
-import Select from "../../components/layout/Select/Select";
 
 function Categories() {
   const location = useReactRouterLocation();
@@ -23,6 +22,7 @@ function Categories() {
   });
   const [editId, setEditId] = useState(null);
   const [formVisible, setFormVisible] = useState(false);
+
   const typeOptions = [
     { value: "income", label: "Receita" },
     { value: "expense", label: "Despesa" },
@@ -47,16 +47,14 @@ function Categories() {
   }, []);
 
   async function addCategory() {
-    console.log(newCategory);
     if (!newCategory.name || !newCategory.description || !newCategory.type) {
       alert("Por favor, preencha todos os campos obrigatórios.");
       return;
     }
     try {
       await createCategory(newCategory);
-      const response = await getAllCategories(); // atualiza a lista de receitas
+      const response = await getAllCategories();
       setCategories(Array.isArray(response) ? response : []);
-      console.log(response);
       setNewCategory({
         name: "",
         description: "",
@@ -64,6 +62,7 @@ function Categories() {
         users_id: 10,
         isRecurring: false,
       });
+      setFormVisible(false);
     } catch (error) {
       console.error("Erro ao adicionar categoria:", error);
     }
@@ -79,7 +78,7 @@ function Categories() {
   async function saveEditCategory() {
     try {
       await updateCategory(editId, newCategory);
-      const response = await getAllCategories(); // atualiza a lista de receitas
+      const response = await getAllCategories();
       setCategories(response);
       setNewCategory({
         name: "",
@@ -89,6 +88,7 @@ function Categories() {
         isRecurring: false,
       });
       setEditId(null);
+      setFormVisible(false);
     } catch (error) {
       console.error("Erro ao salvar alterações:", error);
     }
@@ -97,7 +97,7 @@ function Categories() {
   async function delCategory(id) {
     try {
       await deleteCategory(id);
-      const response = await getAllCategories(); // atualiza a lista de receitas
+      const response = await getAllCategories();
       setCategories(Array.isArray(response) ? response : []);
     } catch (error) {
       console.error("Erro ao excluir categoria:", error);
@@ -116,151 +116,92 @@ function Categories() {
     setEditId(null);
   }
 
-  // Função para lidar com inputs de texto
   function handleInputChange(e) {
     const { name, value } = e.target;
     setNewCategory({ ...newCategory, [name]: value });
   }
 
-  // Função para lidar com o `Select`
   function handleSelectChange(value) {
     setNewCategory({ ...newCategory, type: value });
   }
 
-  //alterna o valor de isRecurring quando o checkbox é marcado ou desmarcado
-  function handleCheckBox() {
-    setNewCategory((prevState) => ({
-      ...prevState,
-      isRecurring: !prevState.isRecurring,
-    }));
-  }
-
-  function handleEditClick(category) {
-    setNewCategory({
-      name: category.name,
-      description: category.description,
-      type: category.type,
-      users_id: category.users_id || 10,
-      isRecurring: category.isRecurring,
-    });
-    setEditId(category.id);
-    setFormVisible(true);
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (editId) {
-      saveEditCategory();
-    } else {
-      addCategory();
-    }
-  };
-
   return (
-    <div className={styles.container}>
+    <div className={styles.pageContainer}>
       <NavBar />
-      <div className={styles.divBtnAdd}>
-        <h2>Categorias</h2>
-        <button className={styles.btnAdd} onClick={toggleFormVisibility}>
-          {formVisible ? "Fechar" : "Adicionar Categoria"}
-        </button>
-      </div>
-      {formVisible && (
-        <div className={styles.main}>
+      <div className={styles.contentContainer}>
+        <div className={styles.header}>
+          <h2>Categorias</h2>
+          <button className={styles.btnAdd} onClick={toggleFormVisibility}>
+            {formVisible ? "Fechar" : "Adicionar Categoria"}
+          </button>
+        </div>
+
+        {formVisible && (
           <div className={styles.formContainer}>
             <h3>{editId ? "Editar Categoria" : "Adicionar Categoria"}</h3>
-            <form onSubmit={handleSubmit}>
-              <div>
-                <label htmlFor="name">Nome:</label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={newCategory.name}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-              <div>
-                <label htmlFor="description">Descrição:</label>
-                <input
-                  type="text"
-                  id="description"
-                  name="description"
-                  value={newCategory.description}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-              <div>
-                <input
-                  type="number"
-                  id="users_id"
-                  name="users_id"
-                  value={newCategory.users_id}
-                  hidden
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
+            <form onSubmit={(e) => e.preventDefault()}>
+              <label htmlFor="name">Nome:</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={newCategory.name}
+                onChange={handleInputChange}
+                required
+              />
+              <label htmlFor="description">Descrição:</label>
+              <input
+                type="text"
+                id="description"
+                name="description"
+                value={newCategory.description}
+                onChange={handleInputChange}
+                required
+              />
               <label>Tipo:</label>
-              <div className={styles.divSelect}>
-                <Select
-                  options={typeOptions}
-                  name="type"
-                  value={newCategory.type}
-                  onChange={handleSelectChange} // Lida diretamente com o valor selecionado
-                />
-              </div>
-              <div className={styles.divButton}>
-                <button className={styles.btnCategories} type="submit">
-                  {editId ? "Salvar alterações" : "Salvar categoria"}
-                </button>
-              </div>
+              <Select
+                options={typeOptions}
+                name="type"
+                value={newCategory.type}
+                onChange={handleSelectChange}
+              />
+              <button
+                className={styles.btnSave}
+                onClick={editId ? saveEditCategory : addCategory}
+              >
+                {editId ? "Salvar Alterações" : "Adicionar Categoria"}
+              </button>
             </form>
           </div>
-        </div>
-      )}
-      <div className={styles.categoryContainer}>
-        <div className={styles.myCategories}>
-          <h2>Minhas Categorias</h2>
-        </div>
-        <div className={styles.divTable}>
-          <table>
-            <thead>
-              <tr>
-                <th>Nome</th>
-                <th>Descrição</th>
-                <th>Tipo</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              {categories.map((category) => (
-                <tr key={category.id}>
-                  <td>{category.name}</td>
-                  <td>{category.description}</td>
-                  <td>{category.type === "income" ? "Receita" : "Despesa"}</td>
-                  <td>
-                    <div className={styles.btnActions}>
-                      <button
-                        className={styles.btnCategories}
-                        onClick={() => handleEditClick(category)}
-                      >
-                        Editar
-                      </button>
-                      <button
-                        className={styles.btnCategories}
-                        onClick={() => delCategory(category.id)}
-                      >
-                        Excluir
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        )}
+
+        <div className={styles.categoriesList}>
+          {categories.map((category) => (
+            <div key={category.id} className={styles.categoryCard}>
+              <i className="fa-solid fa-folder"></i>
+              <div className={styles.categoryDetails}>
+                <h4>{category.name}</h4>
+                <p>{category.description}</p>
+                <span className={styles.categoryType}>
+                  {category.type === "income" ? "Receita" : "Despesa"}
+                </span>
+              </div>
+              <div className={styles.categoryActions}>
+                <button
+                  className={styles.btnCategories}
+                  onClick={() => editCategory(category.id)}
+                >
+                  Editar
+                </button>
+                <button
+                  className={styles.btnCategories}
+                  onClick={() => delCategory(category.id)}
+                >
+                  Excluir
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

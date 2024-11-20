@@ -41,7 +41,7 @@ function Budgets() {
         const alerts = {};
         for (const budget of budgetResponse) {
           const alertResponse = await checkBudgetAlert(budget.id);
-          alerts[budget.id] = alertResponse.status; // Armazena o `status` diretamente
+          alerts[budget.id] = alertResponse.status;
         }
         setBudgetAlerts(alerts);
       } catch (error) {
@@ -52,16 +52,14 @@ function Budgets() {
     fetchData();
   }, []);
 
-  // Função para lidar com inputs de texto
   function handleInputChange(e) {
     const { name, value } = e.target;
     setNewBudget({ ...newBudget, [name]: value });
   }
 
-  // Função para lidar com o `Select` de categoria
   function handleSelectChange(value) {
-    setSelectedCategory(value); // Define o valor selecionado
-    setNewBudget({ ...newBudget, category_id: value }); // Atualiza `category_id` no `newBudget`
+    setSelectedCategory(value);
+    setNewBudget({ ...newBudget, category_id: value });
   }
 
   async function addBudget() {
@@ -74,7 +72,7 @@ function Budgets() {
       const response = await getAllBudgets();
       setBudgets(Array.isArray(response) ? response : []);
       setNewBudget({ description: "", category_id: "", amount: "" });
-      setSelectedCategory(""); // Limpa a seleção de categoria
+      setSelectedCategory("");
       setFormVisible(false);
     } catch (error) {
       console.error("Erro ao adicionar orçamento:", error);
@@ -103,9 +101,7 @@ function Budgets() {
       alert("Por favor, preencha todos os campos.");
       return;
     }
-
     try {
-      console.log("Atualizando orçamento:", newBudget); // Verificar dados antes de enviar
       await updateBudget(editId, newBudget);
       setNewBudget({ description: "", category_id: "", amount: "" });
       setSelectedCategory("");
@@ -136,16 +132,17 @@ function Budgets() {
   }
 
   return (
-    <div className={styles.container}>
+    <div className={styles.pageContainer}>
       <NavBar />
-      <div className={styles.divBtnAdd}>
-        <h2>Orçamentos</h2>
-        <button className={styles.btnAdd} onClick={toggleFormVisibility}>
-          {formVisible ? "Fechar" : "Adicionar Orçamento"}
-        </button>
-      </div>
-      {formVisible && (
-        <div className={styles.main}>
+      <div className={styles.contentContainer}>
+        <div className={styles.header}>
+          <h2>Orçamentos</h2>
+          <button className={styles.btnAdd} onClick={toggleFormVisibility}>
+            {formVisible ? "Fechar" : "Adicionar Orçamento"}
+          </button>
+        </div>
+
+        {formVisible && (
           <div className={styles.formContainer}>
             <h3>{isEditing ? "Editar Orçamento" : "Adicionar Orçamento"}</h3>
             <form onSubmit={(e) => e.preventDefault()}>
@@ -168,7 +165,7 @@ function Budgets() {
                 options={categories}
                 name="category_id"
                 value={selectedCategory}
-                onChange={handleSelectChange} 
+                onChange={handleSelectChange}
               />
               <button
                 className={styles.btnSave}
@@ -178,57 +175,52 @@ function Budgets() {
               </button>
             </form>
           </div>
-        </div>
-      )}
-      <div className={styles.budgetsContainer}>
-        <h2>Meus Orçamentos</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Categoria</th>
-              <th>Limite</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            {budgets.map((budget) => {
-              const status = budgetAlerts[budget.id];
-              let rowClass;
+        )}
 
-              if (status === "alert") {
-                rowClass = styles.overBudget; // Vermelho para orçamento excedido
-              } else if (status === "warning") {
-                rowClass = styles.warningBudget; // Amarelo para 90% do limite
-              } else {
-                rowClass = styles.normalBudget; // Padrão para dentro do limite
-              }
+        <div className={styles.budgetsList}>
+          {budgets.map((budget) => {
+            const status = budgetAlerts[budget.id];
+            let cardClass;
 
-              return (
-                <tr key={budget.id} className={rowClass}>
-                  <td>
+            if (status === "alert") {
+              cardClass = styles.overBudget;
+            } else if (status === "warning") {
+              cardClass = styles.warningBudget;
+            } else {
+              cardClass = styles.normalBudget;
+            }
+
+            return (
+              <div
+                key={budget.id}
+                className={`${styles.budgetCard} ${cardClass}`}
+              >
+                <i className="fa-solid fa-wallet"></i>
+                <div className={styles.budgetDetails}>
+                  <h4>
                     {categories.find((cat) => cat.value === budget.category_id)
                       ?.label || "Categoria não encontrada"}
-                  </td>
-                  <td>R$ {budget.amount}</td>
-                  <td>
-                    <button
-                      className={styles.btnBudgets}
-                      onClick={() => editBudget(budget.id)}
-                    >
-                      Editar
-                    </button>
-                    <button
-                      className={styles.btnBudgets}
-                      onClick={() => delBudget(budget.id)}
-                    >
-                      Excluir
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+                  </h4>
+                  <p>Limite: R$ {budget.amount}</p>
+                </div>
+                <div className={styles.budgetActions}>
+                  <button
+                    className={styles.btnBudgets}
+                    onClick={() => editBudget(budget.id)}
+                  >
+                    Editar
+                  </button>
+                  <button
+                    className={styles.btnBudgets}
+                    onClick={() => delBudget(budget.id)}
+                  >
+                    Excluir
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

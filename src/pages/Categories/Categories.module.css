@@ -1,124 +1,139 @@
-.container {
-  max-width: 100%;
-}
-
-.categoryContainer {
-  padding: 15px;
-}
-
-.divBtnAdd {
+/* Container principal ocupando a tela inteira */
+.pageContainer {
   display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-  padding: 10px;
+  flex-direction: column;
+  min-height: 100vh;
+
 }
 
-.divSelect {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.divButton {
-  margin-top: 25px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.divBtnList {
-  display: flex;
-}
-
-.divTable {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.myCategories {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-table {
+/* NavBar fixa */
+.navBar {
   width: 100%;
-  border-collapse: collapse;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  background-color: #11161c;
+  color: white;
+}
+
+/* Conteúdo abaixo da NavBar */
+.contentContainer {
+  margin-top: 60px;
+  padding: 20px;
+  flex: 1;
+}
+
+/* Cabeçalho */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: 20px;
 }
 
-table,
-th,
-td {
-  border: 1px solid #ddd;
-  text-align: left;
+.header h2 {
+  font-size: 24px;
+  font-weight: bold;
 }
 
-th,
-td {
-  padding: 8px;
-}
-
-button {
-  padding: 5px 10px;
-}
-
-label {
-margin: 0 auto;
-}
-
-.btnActions {
-  display: flex;
-}
-.main {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
+/* Formulário */
 .formContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50%;
-  flex-direction: column;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-input {
-  margin-bottom: 10px;
+.formContainer label {
+  font-weight: bold;
+}
+
+.formContainer input,
+.formContainer select {
+  width: 100%;
   padding: 8px;
-  border-radius: 10px;
-  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
 }
 
-form {
-  width: 100%;
-}
-select {
-  margin-bottom: 1px;
-  padding: 8px;
-  border-radius: 10px;
-  width: 100%;
-}
-
-.btnCategories {
-  margin: 0 auto;
-  padding: 15px;
-  border-radius: 15px;
+.btnSave {
+  padding: 10px 15px;
   background-color: #11161c;
   color: white;
   border: none;
-  cursor: pointer;
   border-radius: 5px;
+  cursor: pointer;
+}
+
+.btnSave:hover {
+  background-color: #0056b3;
 }
 
 .btnAdd {
-  padding: 10px;
-  height: 40px;
-  border-radius: 15px;
+  padding: 10px 15px;
   background-color: #11161c;
   color: white;
   border: none;
-  cursor: pointer;
   border-radius: 5px;
+  cursor: pointer;
+}
+
+.btnAdd:hover {
+  background-color: #3f7ed8;
+}
+
+/* Lista de cartões */
+.categoriesList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Cartão individual de categoria */
+.categoryCard {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  gap: 10px;
+}
+
+.categoryDetails {
+  flex-grow: 1;
+}
+
+.categoryType {
+  display: inline-block;
+  padding: 4px 8px;
+  font-size: 12px;
+  color: #fff;
+  border-radius: 5px;
+  background-color: #6c757d; /* Cor padrão para tipo */
+}
+
+.categoryType.income {
+  background-color: #28a745; /* Verde para receita */
+}
+
+.categoryType.expense {
+  background-color: #dc3545; /* Vermelho para despesa */
+}
+
+.categoryActions button {
+  margin-right: 5px;
+  background-color: #11161c;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.categoryActions button:hover {
+  background-color: #0056b3;
 }

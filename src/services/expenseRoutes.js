@@ -9,9 +9,7 @@ const api = axios.create({
   },
 });
 
-// ------------------ Rotas de despesas ------------------
 
-// Obter todas as despesas
 export const getAllExpenses = async () => {
   try {
     const response = await api.get("/"); 

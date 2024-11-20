@@ -4,7 +4,7 @@
     align-items: center;
     padding: 1em;
     width: 100%;
-    background-color: #000000;
+    background-color: #11161c;
     opacity: 0.87;
 }
 
@@ -46,3 +46,20 @@
     background-color: #3c81bd;
     color: #000;
 }
+
+
+.logoutButton {
+    background: none;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 0;
+    text-decoration: none;
+  }
+  
+  .logoutButton:hover {
+    color: #ff4d4d; /* Cor de hover para indicar logout */
+    text-decoration: none;
+  }
+  
